@@ -1,0 +1,10 @@
+Flask==2.3.3
+flask-cors==4.0.0
+faiss-cpu
+numpy
+torch
+sentence-transformers
+transformers
+accelerate
+huggingface-hub
+python-dotenv
