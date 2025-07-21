@@ -90,13 +90,18 @@ You can access the running API using Postman or any command-line tool like `curl
 
 If I were to deploy this API, I would choose **Google Cloud Run**. It's a strong fit for this project for a few key reasons:
 
-- It supports containerized applications natively, so I can deploy the Docker image without having to manage servers or infrastructure manually.
-- It automatically scales based on incoming traffic, and it scales down to zero when idle, which makes it cost-efficient—especially useful for an API that may not be in constant use.
-- It's fully managed, so I wouldn’t need to handle things like load balancing, networking, or resource provisioning.
-- It integrates easily with Vertex AI, which gives me a future-proof path in case I want to offload model inference to a managed ML platform.
-- It also provides secure and simple ways to handle environment variables, which is important for managing secrets like the Hugging Face token used in this project.
+- We're hosting an LLM-powered API that isn’t expected to receive high traffic initially.
 
-Overall, Cloud Run offers the right balance of simplicity, flexibility, and scalability for this kind of workload.
+- **Fast to set up**: Google Cloud Run lets me deploy a Docker container with minimal configuration. I don’t need to deal with IAM roles, VPC setups, or load balancer configs just to get a container running, which is often the case with AWS (e.g., ECS, Lambda with containers).
+
+- **Cleaner developer experience**: GCP's CLI (`gcloud`) and console UI are easier to navigate for quick deployments compared to AWS, which can be overwhelming because of the sheer variety of services.
+
+- **Free tier is sufficient for current LLM needs, runs.**
+
+- **Ease of creating an endpoint**: I don’t need to connect multiple services to expose one endpoint.
+
+In my opinion, Google Cloud Run is apt for deploying small, testable ML or LLM-based services.
+
 
 
 
