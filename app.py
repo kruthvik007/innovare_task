@@ -14,9 +14,13 @@ def recommend():
         return jsonify({"error": "Missing 'summary' in request body"}), 400
     
     # Call question selector function
-    answers = get_top_questions(narrative)
-
-    return answers
+    questions = get_top_questions(narrative)
+    
+    return jsonify({
+        "questions": questions
+    })
+    
+    # return answers
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
