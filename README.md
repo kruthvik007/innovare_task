@@ -36,7 +36,6 @@ I tried to access and test the API using Postman. The steps I followed are below
 }
 ```
 
-
 ## Project Structure
 
 ```
@@ -50,15 +49,54 @@ I tried to access and test the API using Postman. The steps I followed are below
 └── .gitignore
 ```
 
-## Recommended Deployment: Google Cloud Run
+## Building and Running the Docker Image Locally
 
-Google Cloud Run is the preferred platform for deploying this containerized API due to the following advantages:
+The below are the steps to build the Docker image and run the API locally on your machine:
 
-- **Seamless container support**: Easy to deploy Docker images without any additional configuration.
-- **Automatic scaling**: Instantly scales to handle incoming requests and scales down to zero when idle, reducing costs.
-- **Fully managed infrastructure**: No need to manage servers, clusters, or provisioning.
-- **Native integration with Vertex AI**: Makes it easy to extend the system with advanced model-serving capabilities when needed.
-- **Secure environment variable management**: Google cloud run Effortlessly manage secrets like Hugging Face tokens using Cloud Run’s built-in environment support.
+### Step 1: Make sure Docker is installed and running
+
+Install Docker from [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop) if you haven't already.
+
+### Step 2: Set up the `.env` file
+
+To load the Mistral-7B model, you need to authenticate with the Hugging Face Hub.
+
+1. Log in to your Hugging Face account at: https://huggingface.co
+2. Go to your account settings and generate a **read access token**.
+3. Create a `.env` file in the project root and add your token as follows:
+
+`HF_TOKEN=your_huggingface_token_here`
+
+### Step 3: Build the Docker image
+
+Run the following command from the project directory:
+
+```bash
+docker build -t fot-api .
+```
+
+This command builds the Docker image for the application.
+
+Once the image is built, use the command below to start the container:
+
+```
+docker run --env-file .env -p 5000:5000 fot-api
+```
+
+You can access the running API using Postman or any command-line tool like `curl` by sending requests to this port as shown above.
+
+
+## Preferred Deployment Platform: Google Cloud Run
+
+If I were to deploy this API, I would choose **Google Cloud Run**. It's a strong fit for this project for a few key reasons:
+
+- It supports containerized applications natively, so I can deploy the Docker image without having to manage servers or infrastructure manually.
+- It automatically scales based on incoming traffic, and it scales down to zero when idle, which makes it cost-efficient—especially useful for an API that may not be in constant use.
+- It's fully managed, so I wouldn’t need to handle things like load balancing, networking, or resource provisioning.
+- It integrates easily with Vertex AI, which gives me a future-proof path in case I want to offload model inference to a managed ML platform.
+- It also provides secure and simple ways to handle environment variables, which is important for managing secrets like the Hugging Face token used in this project.
+
+Overall, Cloud Run offers the right balance of simplicity, flexibility, and scalability for this kind of workload.
 
 
 
